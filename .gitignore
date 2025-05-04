@@ -6,3 +6,5 @@ alexfu_db/
 __pycache__/
 *.pyc
 alexXu_db/
+data/
+alexXu_db/
