@@ -1,4 +1,4 @@
-# 📚 StudyBuddy: RAG Chatbot for "Introduction to System Design" by Alex Fu
+# 📚 StudyBuddy: RAG Chatbot for "Introduction to System Design" by Alex Xu
 
 StudyBuddy is a Retrieval-Augmented Generation (RAG) chatbot built using Python, OpenAI's GPT models, and ChromaDB. It allows you to interact with the book *Introduction to System Design* by Alex Xu as if it were your personal tutor.
 
@@ -27,10 +27,4 @@ Ask questions, request summaries, or get explanations — all grounded in the ac
 
 ---
 
-## 🚀 Getting Started
 
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/your-username/studybuddy-alexfu.git
-cd studybuddy-alexfu
