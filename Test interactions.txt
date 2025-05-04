@@ -1,0 +1,81 @@
+Test interactions - 
+
+(.venv) rutujatalekar@Rutujas-MacBook-Air chatbot-system-design % python3 src/rag_query.py
+🧠 StudyBuddy is ready! Ask a question about system design.
+
+❓ Your question (or 'exit'): What is CAP theorem
+
+💬 Answer:
+ CAP theorem is a concept in distributed systems that states that it is impossible to simultaneously achieve consistency, availability, and partition tolerance in a distributed system. The theorem was first introduced by Eric Brewer in 2000 and is often used to help designers make trade-offs when designing distributed systems.
+
+In a distributed system, consistency refers to the ability of all nodes to have the same data at the same time. Availability refers to the ability of the system to respond to requests in a timely manner. Partition tolerance refers to the ability of the system to continue operating even when it is partitioned into multiple parts.
+
+The theorem states that it is impossible to simultaneously achieve all three of these properties in a distributed system. This means that designers must make trade-offs when designing a distributed system, and must choose which of these properties is most important for their specific use case.
+
+For example, a system that prioritizes consistency might choose to sacrifice availability and partition tolerance in order to ensure that all nodes have the same data at the same time. On the other hand, a system that prioritizes availability might choose to sacrifice consistency and partition tolerance in order to ensure that the system can respond to requests in a timely manner, even if it is partitioned into multiple parts.
+
+📄 Referenced Pages:
+[17, 66, 84]
+
+================================================================================
+
+
+❓ Your question (or 'exit'): I didnt understand first paragraph, can you explain in detail
+
+💬 Answer:
+ I apologize for the confusion. Let me try to explain the stock exchange design in more detail.
+
+When a client places a stock buying order via a broker's web or mobile app, the broker sends the order to the stock exchange. The exchange then processes the order and matches it with all the sell orders at the same price level. In the example you provided, the buy order for 2700 shares at price 100.10 is matched with all the sell orders at that price level, including the first order at price 100.11.
+
+The data is encrypted and decrypted using Transport Layer Security (TLS) in HTTPS. When the client (browser) and the server establish a TCP connection, the client sends a "client hello" message to the server. The server then sends its own "server hello" message, which includes information about the TLS version and encryption algorithms available. The client and server then exchange keys and agree on a specific encryption algorithm. Once the encryption is established, all data transmitted between the client and server is encrypted and decrypted using TLS.
+
+I hope this explanation helps clarify the stock exchange design and how HTTPS works. Let me know if you have any further questions.
+
+📄 Referenced Pages:
+[17, 122, 150, 152]
+
+================================================================================
+
+
+❓ Your question (or 'exit'): Please explain this in detail -  CAP theorem is a concept in distributed systems that states that it is impossible to simulaneously achieve consistency, availability, and partition tolerance in a distributed system. The theorem was first introduced by Eric Brewer in 2000 and is often used to help designers make trade-offs when designing distributed systems.
+
+💬 Answer:
+ The CAP theorem is a fundamental concept in distributed systems that states that it is impossible to simultaneously achieve consistency, availability, and partition tolerance in a distributed system. This theorem was first introduced by Eric Brewer in 2000 and is often used to help designers make trade-offs when designing distributed systems.
+
+Consistency refers to the property of a distributed system where all nodes have the same view of the data at any given time. Availability refers to the property of a distributed system where all nodes can respond to requests at any given time. Partition tolerance refers to the property of a distributed system where the system can continue to function even if some nodes are disconnected from the rest of the system.
+
+In other words, the CAP theorem states that a distributed system can only provide two of the three properties (consistency, availability, and partition tolerance) at the same time. If a system chooses to prioritize consistency, it may become unavailable or partitioned. If a system chooses to prioritize availability, it may become inconsistent or partitioned. If a system chooses to prioritize partition tolerance, it may become inconsistent or unavailable.
+
+For example, a distributed database that prioritizes consistency may become unavailable if some nodes are disconnected from the rest of the system. On the other hand, a distributed database that prioritizes availability may become inconsistent if some nodes are disconnected from the rest of the system.
+
+In summary, the CAP theorem is a useful tool for designers to understand the trade-offs involved in designing distributed systems. By understanding the properties of consistency, availability, and partition tolerance, designers can make informed decisions about which properties to prioritize in their systems.
+
+📄 Referenced Pages:
+[66, 68, 138, 158]
+
+================================================================================
+
+
+❓ Your question (or 'exit'): Okay 
+❓ Your question (or 'exit'): Okay explain consistency part of CAP
+
+💬 Answer:
+ In the context of distributed systems, consistency refers to the degree to which data is up-to-date and accurate across all nodes in the system. Consistency is one of the three core principles of CAP (Consistency, Availability, and Partition Tolerance), which are used to design and evaluate distributed systems.
+
+In a distributed system, achieving consistency can be challenging due to the asynchronous nature of communication and the potential for network partitions. To ensure consistency, various techniques such as replication, consensus algorithms, and conflict resolution mechanisms can be used.
+
+Replication involves maintaining multiple copies of the same data across different nodes in the system. This allows for faster access to data and reduces the risk of data loss due to node failures. However, maintaining consistency across all replicas can be challenging, especially in the presence of concurrent updates and network partitions.
+
+Consensus algorithms are used to ensure that all nodes in the system agree on the state of the data. These algorithms typically involve a process of message passing and voting, where nodes exchange messages and vote on the proposed state of the data. The goal is to reach a consensus that is both correct and consistent with the desired state of the data.
+
+Conflict resolution mechanisms are used to handle situations where two or more transactions attempt to modify the same data at the same time. These mechanisms typically involve either rolling back one or more transactions or merging the changes made by the conflicting transactions in a way that preserves consistency.
+
+Overall, achieving consistency in a distributed system requires careful design and implementation of appropriate techniques and mechanisms. The tradeoff between consistency and other principles such as availability and partition tolerance must also be carefully considered when designing and evaluating distributed systems.
+
+📄 Referenced Pages:
+[6, 66, 68, 122]
+
+================================================================================
+
+
+❓ Your question (or 'exit'): 
