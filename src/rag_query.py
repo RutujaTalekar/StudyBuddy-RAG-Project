@@ -1,15 +1,31 @@
 import os
+from dotenv import load_dotenv
+from openai import OpenAI
 from langchain_core.runnables import RunnableLambda
 from langchain.embeddings.base import Embeddings
 from sentence_transformers import SentenceTransformer
 from langchain_community.vectorstores import Chroma
-from langchain.chains import RetrievalQA
-from langchain.schema import Document
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_openai import ChatOpenAI
+from langchain_chroma import Chroma
+from langchain.chains.retrieval_qa.base import RetrievalQA
+
+
+import warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+warnings.filterwarnings("ignore", category=UserWarning)
+
+import os
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+# === Load environment variables ===
+load_dotenv()
+# OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+# OPENAI_BASE_URL = os.getenv("OPENAI_BASE_URL", "https://openrouter.ai/api/v1")
+TOGETHER_API_KEY = os.getenv("TOGETHER_API_KEY")
+
 
 # === CONFIG ===
 CHROMA_PATH = "alexxu_db"
-USE_FAKE_LLM = True  # Change to False later to plug in real LLM
+USE_FAKE_LLM = False  # Set True to use dummy LLM
 
 # === WRAPPER FOR EMBEDDINGS ===
 class LangchainSentenceTransformer(Embeddings):
@@ -34,11 +50,16 @@ def main():
     vectordb = load_vectorstore()
     retriever = vectordb.as_retriever(search_kwargs={"k": 4})
 
-    # ✅ Dummy LLM for retrieval testing only
-    if USE_FAKE_LLM:
-        llm = RunnableLambda(lambda input, **kwargs: "🤖 This is a fake answer. Replace with a real LLM.")
+    # ✅ Real LLM via OpenRouter
+    if not USE_FAKE_LLM:
+        llm = ChatOpenAI(
+            openai_api_key=TOGETHER_API_KEY,
+            openai_api_base="https://api.together.xyz/v1",
+            model="mistralai/Mistral-7B-Instruct-v0.1",  # Example model
+            temperature=0.3
+        )
     else:
-        raise NotImplementedError("Real LLM integration coming next.")
+        llm = RunnableLambda(lambda input, **kwargs: "🤖 This is a fake answer.")
 
     qa_chain = RetrievalQA.from_chain_type(
         llm=llm,
@@ -60,6 +81,9 @@ def main():
         print("\n📄 Referenced Pages:")
         pages = {doc.metadata["page"] for doc in result["source_documents"]}
         print(sorted(pages))
+
+        print("\n" + "="*80 + "\n")
+
 
 # === Run ===
 if __name__ == "__main__":
