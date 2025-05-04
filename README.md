@@ -15,6 +15,11 @@ Ask questions. Get summaries. Understand core concepts. All powered by local PDF
 - 💸 100% **free & open-source**, no OpenAI key required
 - 🐳 Easy to run locally or in Docker
 
+## 🔍 Limitations & Future Work
+
+- Currently, the chatbot retrieves answers based only on **text extracted from the PDF**.
+- Images, diagrams, and other non-text visual content are **not yet parsed or processed**.
+- Future updates aim to add **OCR support** to extract text from images and diagrams for enhanced context and coverage.
 
 
 ## 🗂️ Project Structure
