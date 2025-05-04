@@ -4,7 +4,7 @@ A lightweight, open-source chatbot to help you study **_Introduction to System D
 
 Ask questions. Get summaries. Understand core concepts. All powered by local PDF embeddings + Together AI LLM.
 
----
+
 
 ## 🚀 Features
 
@@ -15,10 +15,10 @@ Ask questions. Get summaries. Understand core concepts. All powered by local PDF
 - 💸 100% **free & open-source**, no OpenAI key required
 - 🐳 Easy to run locally or in Docker
 
----
+
 
 ## 🗂️ Project Structure
-
+```
 system-design-chatbot/
 │
 ├── data/ # PDF and preprocessed JSON
@@ -35,9 +35,7 @@ system-design-chatbot/
 ├── .env.example # ✅ Template for environment variables
 ├── requirements.txt # Python dependencies
 └── README.md # You're reading it
-
-
----
+```
 
 ## 🧑‍💻 Setup Instructions
 
