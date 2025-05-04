@@ -46,6 +46,7 @@ git clone git@github.com:your-username/system-design-chatbot.git
 cd system-design-chatbot
 ```
 
+
 ### 2. Install dependencies (Python ≥ 3.10 recommended)
 
 ```bash
@@ -54,12 +55,14 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
+
 ### 3. Add Book PDF
 Put your copy of the Alex Xu Book
 ```bash
 data/Alex-Xu-SysDesignHandbook.pdf
 ```
 ⚠️ You must own a legal copy of the book. This repo does not distribute copyrighted content.
+
 
 ### 4. Environment Variables
 Copy the example env file:
@@ -70,6 +73,7 @@ Paste your Together AI key in .env:
 ```bash
 TOGETHER_API_KEY=your_together_api_key_here
 ```
+
 
 ### 5. Build Knowledge Base
 Step 1: Extract & preprocess
@@ -91,7 +95,8 @@ This step:
 
 You only need to run this again if the source book changes.
 
-### 5. Run the ChatBot
+
+### 6. Run the ChatBot
 
 ```bash
 python3 src/rag_query.py
@@ -106,6 +111,7 @@ Example prompts:
 "Give me a summary of caching layers"
 
 The chatbot uses your local vectorstore to fetch top-matching passages from the book, and Together AI to generate accurate responses.
+
 
 ## ⚙️ Model Used
 LLM Provider: Together AI
