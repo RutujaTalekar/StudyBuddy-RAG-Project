@@ -94,7 +94,7 @@ Build the docker image with first command and then run in interactive mode with 
 
 ```bash
 docker-compose build
-docker-compose run --rm studybuddy-chatbot
+docker-compose run --rm studybuddy
 ```
 
 You'll see -

@@ -1,0 +1,11 @@
+services:
+  studybuddy:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: ["./entrypoint.sh"]
+    stdin_open: true     # 👈 Required for interactive input()
+    tty: true            # 👈 Required for interactive terminal
