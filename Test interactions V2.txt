@@ -1,0 +1,168 @@
+Test interactions from V2, added custom prompt engineering  - 
+
+(.venv) rutujatalekar@Rutujas-MacBook-Air StudyBuddy-RAG-Project % python3 src/rag_query.py
+🧠 StudyBuddy is ready! Ask a question about system design.
+
+❓ Your question (or 'exit'): what is caching? why is it important while designing systems
+
+💬 Answer:
+ Caching is a technique used in system design to store frequently accessed data in memory or a faster storage medium, such as a cache, to reduce the time it takes to retrieve the data. This is done to improve the performance of the system by reducing the number of times the data needs to be retrieved from the original data source, such as a database.
+
+Caching is important in system design because it can significantly improve the performance of the system, especially for applications that require fast access to frequently accessed data. By caching the data, the system can retrieve it more quickly, which can lead to a better user experience and improved overall system performance. Additionally, caching can help to reduce the load on the data source, which can help to prevent performance issues and improve the scalability of the system.
+
+There are several caching strategies that can be used in system design, including:
+
+* Cache aside: In this strategy, the cache is notified when data is added or updated in the data source. The cache is then updated to reflect these changes.
+* Read through: In this strategy, the cache is updated when data is read from the data source. This ensures that the cache always has the most up-to-date data.
+* Write around: In this strategy, the cache is updated when data is written to the data source. This ensures that the cache always has the most up-to-date data.
+* Write back: In this strategy, the cache is updated when data is written to the cache. This ensures that the cache always has the most up-to-date data.
+* Write through: In this strategy, the cache is updated when data is written to the data source. This ensures that the cache always has the most up-to-date data.
+
+When choosing the right caching strategy to use, it is important to consider the specific requirements of the application and the data being cached. For example, if the data is frequently accessed and updated, a write-through or write-back strategy may be more appropriate. On the other hand, if the data is read-only, a read-through or cache-aside strategy may be more appropriate.
+
+It is also important to consider the potential for cache miss attacks, which can occur when data is not cached and must be retrieved from the data source every time it is requested. To prevent cache miss attacks, it is important to carefully design the caching strategy and to monitor the performance of the system to ensure that it is functioning as intended.
+
+📄 Referenced Pages:
+[69, 70, 72, 74]
+
+================================================================================
+
+
+❓ Your question (or 'exit'): What is eventual consistency?
+
+💬 Answer:
+ Eventual consistency is a concept in distributed systems where the consistency of data across different nodes in the system may not be guaranteed to be consistent at all times. Instead, the system ensures that the data will eventually become consistent, but there may be a delay in the time it takes for the consistency to be achieved. This is in contrast to strong consistency, where the data is guaranteed to be consistent across all nodes at all times.
+
+In the context of data replication, eventual consistency allows for some level of flexibility in the system design, as it allows for asynchronous updates to occur. This can be useful in situations where there is a high volume of updates or where there are delays in the communication between nodes. However, it is important to note that eventual consistency can lead to inconsistencies in the data, and care must be taken to ensure that the system is designed in a way that minimizes these inconsistencies.
+
+📄 Referenced Pages:
+[68, 122, 133, 138]
+
+================================================================================
+
+
+❓ Your question (or 'exit'): What's the GDP of India? 
+
+💬 Answer:
+ Sorry, I couldn't find that in the book. The book focuses on system design concepts, not on general knowledge.
+
+📄 Referenced Pages:
+[57, 91, 122, 128]
+
+================================================================================
+
+
+❓ Your question (or 'exit'): Can you explain CAP theorem simply?
+
+
+
+^Z
+zsh: suspended  python3 src/rag_query.py
+(.venv) rutujatalekar@Rutujas-MacBook-Air StudyBuddy-RAG-Project % python3 src/rag_query.py
+🧠 StudyBuddy is ready! Ask a question about system design.
+
+❓ Your question (or 'exit'): Can you explain CAP theorem simply?
+
+💬 Answer:
+ Sure, I'd be happy to help you understand the CAP theorem!
+
+The CAP theorem, also known as the Brewer's theorem, is a fundamental concept in distributed systems. It states that in a distributed system, it is impossible to simultaneously provide all three of the following guarantees:
+
+1. Consistency: All clients see the same data at the same time.
+2. Availability: All clients can access the data at all times.
+3. Partition tolerance: The system can continue to function even if some of the nodes fail or become unavailable.
+
+In other words, you can have either consistency and availability, or consistency and partition tolerance, or availability and partition tolerance, but you cannot have all three at the same time.
+
+For example, if you have a distributed database that needs to be highly available, you may need to sacrifice some consistency. This means that some clients may see slightly outdated data, but the system will continue to function even if some nodes fail.
+
+On the other hand, if you need to maintain consistency at all costs, you may need to sacrifice availability. This means that some clients may not be able to access the data at all times, but the system will ensure that all clients see the same data.
+
+It's important to note that the CAP theorem is not a hard rule, but rather a guideline. In practice, many systems are able to provide some level of consistency, availability, and partition tolerance, depending on their specific requirements and constraints.
+
+📄 Referenced Pages:
+[83, 84, 114, 120]
+
+================================================================================
+
+
+❓ Your question (or 'exit'): Explain in detail
+
+💬 Answer:
+ Sure, I'd be happy to help you understand the design of a stock exchange.
+
+A stock exchange is a platform where buyers and sellers can trade stocks. When a client places an order to buy a stock, the broker sends the order to the exchange along with the necessary information, such as the stock symbol, the quantity, and the price.
+
+The exchange then processes the order and matches it with other orders that are looking to sell the same stock. If there are enough buyers willing to pay the asking price, the exchange will execute the trade and the client will receive the stock. If there are not enough buyers, the exchange will reject the order and the client will need to adjust their price or cancel the order.
+
+In addition to placing and executing orders, stock exchanges also perform other operations, such as canceling orders and matching orders. These operations are designed to ensure that the market is fair and efficient, and that all participants have equal access to the information they need to make informed decisions.
+
+Overall, the design of a stock exchange is a complex task that requires careful consideration of a wide range of factors, including market dynamics, security, and user experience. By understanding the basic operations of a stock exchange, you can gain a better appreciation for how these systems work and how they can be designed to meet the needs of both buyers and sellers.
+
+📄 Referenced Pages:
+[28, 122, 151, 152]
+
+================================================================================
+
+
+❓ Your question (or 'exit'): I didn't get that, can you explain more?
+
+💬 Answer:
+ I apologize if my previous response was not clear. Let me try to explain the flowchart in more detail.
+
+The flowchart shows how Slack decides to send a notification. The process starts with a user sending a message to a Slack channel. The message is then sent to a Slice Processor, which validates the message and checks if it should be sent to Bank B. If the message is authorized, it is sent to the Regional Processor in London, which assigns a unique ID to the message and sends it to the Slice Processor in Bank B. The Slice Processor in Bank B then validates the message and sends it to the appropriate channel.
+
+The complexity of this process is due to the various operations involved, such as placing a new order, canceling an order, and matching an order. These operations require the Slice Processor to invoke and combine the services, which can take time and effort.
+
+In summary, the flowchart illustrates how a simple feature, such as sending a notification, can take longer to develop than expected due to the complexity involved in invoking and combining services.
+
+📄 Referenced Pages:
+[33, 39, 79, 151]
+
+================================================================================
+
+
+❓ Your question (or 'exit'): What is quantum computing in distributed systems?
+
+💬 Answer:
+ I'm sorry, I couldn't find information about quantum computing in distributed systems in the provided book. Could you please provide more context or clarify your question?
+
+📄 Referenced Pages:
+[41, 52, 111, 149]
+
+================================================================================
+
+
+❓ Your question (or 'exit'): Give me 3 pros of caching
+
+💬 Answer:
+ Sure, I'd be happy to help you understand caching strategies!
+
+Pros of caching:
+
+1. Improved performance: Caching allows frequently accessed data to be stored in memory, reducing the number of times the data needs to be retrieved from disk or other slower storage. This can significantly improve the performance of your application.
+2. Reduced database load: By caching data in memory, you can reduce the number of queries that need to be sent to the database. This can help reduce the load on the database and improve its overall performance.
+3. Better scalability: Caching can help improve the scalability of your application by reducing the number of database queries that need to be processed. This can make it easier to handle large amounts of traffic and ensure that your application can continue to perform well as it grows.
+
+When it comes to choosing the right caching strategy, it's important to consider the specific needs of your application. Some strategies, such as cache aside and read through, are better suited for read-heavy workloads, while others, such as write around and write back, are better suited for write-heavy workloads. It's also important to consider the trade-offs between different strategies, such as the amount of memory required and the potential for cache invalidation.
+
+I hope this helps! Let me know if you have any other questions.
+
+📄 Referenced Pages:
+[69, 70, 72, 74]
+
+================================================================================
+
+
+❓ Your question (or 'exit'): Who are you?
+
+💬 Answer:
+ I'm StudyBuddy, an expert AI tutor trained on the book "System Design Handbook" by Alex Xu. My job is to help you understand system design concepts as described in the book. If you have any questions related to system design, feel free to ask!
+
+📄 Referenced Pages:
+[10, 50, 57, 73]
+
+================================================================================
+
+
+❓ Your question (or 'exit'): 

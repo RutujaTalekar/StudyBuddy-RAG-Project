@@ -8,6 +8,7 @@ from langchain_community.vectorstores import Chroma
 from langchain_openai import ChatOpenAI
 from langchain_chroma import Chroma
 from langchain.chains.retrieval_qa.base import RetrievalQA
+from prompt_template import get_custom_prompt
 
 
 import warnings
@@ -49,6 +50,8 @@ def load_vectorstore():
 def main():
     vectordb = load_vectorstore()
     retriever = vectordb.as_retriever(search_kwargs={"k": 4})
+    custom_prompt = get_custom_prompt()
+
 
     # ✅ Real LLM via OpenRouter
     if not USE_FAKE_LLM:
@@ -62,10 +65,13 @@ def main():
         llm = RunnableLambda(lambda input, **kwargs: "🤖 This is a fake answer.")
 
     qa_chain = RetrievalQA.from_chain_type(
-        llm=llm,
-        retriever=retriever,
-        return_source_documents=True
-    )
+                                    llm=llm,
+                                    retriever=retriever,
+                                    chain_type="stuff",  # explore "refine" later for better tuning
+                                    chain_type_kwargs={"prompt": custom_prompt},
+                                    return_source_documents=True
+                                    )
+    
 
     print("🧠 StudyBuddy is ready! Ask a question about system design.")
     while True:

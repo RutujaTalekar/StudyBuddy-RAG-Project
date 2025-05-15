@@ -1,4 +1,4 @@
-Test interactions - 
+Test interactions from base version - 
 
 (.venv) rutujatalekar@Rutujas-MacBook-Air chatbot-system-design % python3 src/rag_query.py
 🧠 StudyBuddy is ready! Ask a question about system design.
