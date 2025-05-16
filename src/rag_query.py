@@ -9,26 +9,19 @@ from langchain_openai import ChatOpenAI
 from langchain_chroma import Chroma
 from langchain.chains.retrieval_qa.base import RetrievalQA
 from prompt_template import get_custom_prompt
-
-
 import warnings
+
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.filterwarnings("ignore", category=UserWarning)
 
-import os
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
-# === Load environment variables ===
 load_dotenv()
-# OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-# OPENAI_BASE_URL = os.getenv("OPENAI_BASE_URL", "https://openrouter.ai/api/v1")
+
 TOGETHER_API_KEY = os.getenv("TOGETHER_API_KEY")
-
-
-# === CONFIG ===
 CHROMA_PATH = "alexxu_db"
-USE_FAKE_LLM = False  # Set True to use dummy LLM
+USE_FAKE_LLM = False
 
-# === WRAPPER FOR EMBEDDINGS ===
+
 class LangchainSentenceTransformer(Embeddings):
     def __init__(self, model):
         self.model = model
@@ -39,58 +32,72 @@ class LangchainSentenceTransformer(Embeddings):
     def embed_query(self, text):
         return self.model.encode(text).tolist()
 
-# === CHROMA LOADING ===
+
 def load_vectorstore():
     model = SentenceTransformer("all-MiniLM-L6-v2")
     embedding = LangchainSentenceTransformer(model)
     vectordb = Chroma(persist_directory=CHROMA_PATH, embedding_function=embedding)
     return vectordb
 
-# === MAIN ===
+
 def main():
+    print("=" * 60)
+    print("🎓 Welcome to StudyBuddy — System Design Chatbot 📘")
+    print("=" * 60)
+
     vectordb = load_vectorstore()
-    retriever = vectordb.as_retriever(search_kwargs={"k": 4})
+    retriever = vectordb.as_retriever(search_kwargs={"k": 6})
     custom_prompt = get_custom_prompt()
 
-
-    # ✅ Real LLM via OpenRouter
     if not USE_FAKE_LLM:
         llm = ChatOpenAI(
             openai_api_key=TOGETHER_API_KEY,
             openai_api_base="https://api.together.xyz/v1",
-            model="mistralai/Mistral-7B-Instruct-v0.1",  # Example model
-            temperature=0.3
+            model="mistralai/Mistral-7B-Instruct-v0.1",
+            temperature=0.3,
         )
     else:
         llm = RunnableLambda(lambda input, **kwargs: "🤖 This is a fake answer.")
 
     qa_chain = RetrievalQA.from_chain_type(
-                                    llm=llm,
-                                    retriever=retriever,
-                                    chain_type="stuff",  # explore "refine" later for better tuning
-                                    chain_type_kwargs={"prompt": custom_prompt},
-                                    return_source_documents=True
-                                    )
-    
+        llm=llm,
+        retriever=retriever,
+        chain_type="stuff",
+        chain_type_kwargs={"prompt": custom_prompt},
+        return_source_documents=True,
+    )
 
-    print("🧠 StudyBuddy is ready! Ask a question about system design.")
     while True:
         query = input("\n❓ Your question (or 'exit'): ").strip()
+        if not query:
+            print("⚠️  Please enter a more specific question.")
+            continue
         if query.lower() in ["exit", "quit"]:
             print("👋 Bye!")
             break
+        
 
-        result = qa_chain.invoke(query)
-        print("\n💬 Answer:")
-        print(result["result"])
+        result = qa_chain.invoke(query.lower().strip())
 
-        print("\n📄 Referenced Pages:")
-        pages = {doc.metadata["page"] for doc in result["source_documents"]}
-        print(sorted(pages))
+        source_docs = result.get("source_documents", [])
+        top_chunks = [doc.page_content for doc in source_docs if doc.page_content.strip()]
+        query_keywords = set(query.lower().split())
+        
+        if not top_chunks or all(len(chunk) < 30 for chunk in top_chunks) or not any(
+            any(word in doc.page_content.lower() for word in query_keywords) for doc in source_docs):
+            print("\n💬 Answer:")
+            print("⚠️ Sorry, I couldn't find anything relevant in the book. Please try rephrasing.")
+            continue  # skip to next prompt
+        
+        else:
+            print("\n💬 Answer:")
+            print(result["result"])
+            print("\n📄 Referenced Pages:")
+            pages = {doc.metadata.get("page") for doc in source_docs if doc.metadata.get("page") is not None}
+            print(sorted(pages))
 
-        print("\n" + "="*80 + "\n")
+        print("\n" + "=" * 80 + "\n")
 
 
-# === Run ===
 if __name__ == "__main__":
     main()

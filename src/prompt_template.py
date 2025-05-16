@@ -15,13 +15,15 @@ def get_custom_prompt():
             5. Keep your tone friendly, clear, and helpful — like a personal tutor, not a blog writer.
             6. If the user asks something unrelated to system design or not found in the book, gently let them know you are only trained on this book.
 
-            Always refer to the input context below when answering.
+            Answer the question using ONLY the context below.
 
 Context:
 {context}
 
 Question:
 {question}
+            If the answer is not in the context, say "I couldn't find that in the book." Don't guess.
+
 
         """
     
