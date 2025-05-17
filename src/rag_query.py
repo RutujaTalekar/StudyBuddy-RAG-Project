@@ -1,6 +1,5 @@
 import os
 from dotenv import load_dotenv
-from openai import OpenAI
 from langchain_core.runnables import RunnableLambda
 from langchain.embeddings.base import Embeddings
 from sentence_transformers import SentenceTransformer
@@ -38,15 +37,17 @@ def load_vectorstore():
     embedding = LangchainSentenceTransformer(model)
     vectordb = Chroma(persist_directory=CHROMA_PATH, embedding_function=embedding)
     return vectordb
-
-
+            
 def main():
+
     print("=" * 60)
     print("🎓 Welcome to StudyBuddy — System Design Chatbot 📘")
     print("=" * 60)
 
     vectordb = load_vectorstore()
+    # Semantic retrieval
     retriever = vectordb.as_retriever(search_kwargs={"k": 6})
+    # Prompt extraction
     custom_prompt = get_custom_prompt()
 
     if not USE_FAKE_LLM:

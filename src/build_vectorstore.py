@@ -23,7 +23,10 @@ def load_documents(json_path):
 
 # 2. Split text into chunks
 def chunk_documents(documents):
-    splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
+    splitter = RecursiveCharacterTextSplitter(
+        chunk_size=300,     
+        chunk_overlap=30
+    )
     return splitter.split_documents(documents)
 
 # 3. Create vector store using SentenceTransformer
@@ -31,7 +34,7 @@ def build_vectorstore(chunks, persist_path):
     model = SentenceTransformer("all-MiniLM-L6-v2")
     vectorstore = Chroma.from_documents(
         documents=chunks,
-        embedding=LangchainSentenceTransformer(model),          # This line givin error - LangchainSentenceTransformer returns NumPy arrays, but Chroma expects a regular list of floats.
+        embedding=LangchainSentenceTransformer(model),     # error - LangchainSentenceTransformer returns NumPy arrays, but Chroma expects a regular list of floats.
         persist_directory=persist_path
     )
     vectorstore.persist()
@@ -40,15 +43,17 @@ def build_vectorstore(chunks, persist_path):
 # Wrapper for compatibility with Langchain
 from langchain.embeddings.base import Embeddings
 
+from langchain.embeddings.base import Embeddings
+
 class LangchainSentenceTransformer(Embeddings):
     def __init__(self, model):
         self.model = model
 
     def embed_documents(self, texts):
-        return [vec.tolist() for vec in self.model.encode(texts, show_progress_bar=True)]
+        return [vec.tolist() for vec in self.model.encode(texts, show_progress_bar=True, convert_to_numpy=True)]
 
     def embed_query(self, text):
-        return self.model.encode(text).tolist()
+        return self.model.encode(text, convert_to_numpy=True).tolist()
 
 
 # Run it
