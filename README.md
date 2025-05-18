@@ -1,18 +1,16 @@
 # 🤖 StudyBuddy: System Design Chatbot
 
-A lightweight, open-source chatbot to help you study **_Introduction to System Design_** by **Alex Xu**.
-
-Ask questions. Get summaries. Understand core concepts. All powered by local PDF embeddings + Together AI LLM.
+StudyBuddy is an AI-powered study assistant that leverages Retrieval-Augmented Generation (RAG) to provide accurate answers to system design questions based on the "System Design Handbook" by Alex Xu. It utilizes LangChain, SentenceTransformers, ChromaDB, and Together AI to deliver contextual responses grounded in the book's content.
 
 
 
 ## 🚀 Features
 
-- 🔍 **Retrieval-Augmented Generation (RAG)** for accurate, book-based answers
 - 📚 Parses & embeds your own PDF (`System Design Handbook by Alex Xu`)
-- 🧠 Uses **Mistral-7B** or other Together AI models for smart Q&A
+- 🔍 **Retrieval-Augmented Generation (RAG)** Answers are strictly derived from the "System Design Handbook"
+- 🧠 Employs SentenceTransformer embeddings for effective semantic retrieval.
+- 🧑‍💻 **free & open-source**, uses **Mistral-7B** or other Together AI models for smart Q&A
 - 🧾 Shows source pages so you can dive deeper in the book
-- 💸 **free & open-source**, no OpenAI key required
 - 🐳 Easy to run locally or in Docker
 
 
@@ -58,8 +56,8 @@ system-design-chatbot/
 <li> Clone the repo and launch the chatbot in seconds using Docker:
 
 ```bash
-git clone https://github.com/your-username/system-design-chatbot.git
-cd system-design-chatbot
+git clone https://github.com/RutujaTalekar/StudyBuddy-RAG-Project.git
+cd StudyBuddy-RAG-Project
 ```
 
 </li>
@@ -99,35 +97,46 @@ docker-compose run --rm studybuddy
 
 You'll see -
 ```bash
-🧠 StudyBuddy is ready! Ask a question about system design.
-❓ Your question (or 'exit'):   Explain CAP theorem in 2 lines
+============================================================
+🎓 Welcome to StudyBuddy — System Design Chatbot 📘
+============================================================
+
+❓ Your question (or 'exit'): Explain load balancing in 2 lines
 ```
 </li>
 
 </ol>
 
 ## 🧠 What Happens Under the Hood
-The first time you run the chatbot, the following steps are handled automatically:
 
-- The PDF is parsed and converted to a JSON structure
+When you run the chatbot **for the first time**, the following steps occur — **only if the Chroma vectorstore (`alexxu_db/`) does not already exist**:
 
-- Text chunks are embedded using sentence-transformers
+### 🔧 One-Time Preprocessing
 
-- A local Chroma vectorstore is built (alexxu_db/)
+1. **PDF Extraction**  
+   Your legally provided PDF book is parsed and converted into a structured JSON format (`book_pages.json`), with one entry per page.
 
-- Your questions are matched against the book's content
+2. **Text Chunking & Embedding**  
+   The parsed text is split into overlapping chunks (~500 tokens), then embedded using `sentence-transformers` (`all-MiniLM-L6-v2`).
 
-- A Together AI model (like mistralai/Mistral-7B-Instruct-v0.1) generates an answer
+3. **Vectorstore Creation**  
+   All chunks and their embeddings are stored in a local Chroma vector database (`alexxu_db/`) for fast semantic retrieval.
 
 
-Example prompts:
-```bash
-Explain CAP theorem in 2 lines?
 
-What are the tradeoffs of sharding?
+### 🤖 Runtime Flow (For Each Question)
 
-Give me a summary of caching layers
-```
+4. **Semantic Retrieval**  
+   When a user asks a question, relevant chunks are retrieved from the vectorstore using semantic similarity.
+
+5. **Custom Prompt Injection**  
+   The retrieved context is inserted into a carefully designed **custom prompt template**, guiding the LLM to respond based on the book.
+
+6. **Answer Generation (LLM)**  
+   A Together AI language model (e.g., `mistralai/Mistral-7B-Instruct-v0.1`) generates a grounded, natural language answer.
+
+7. **Relevance Filtering**  
+   If the retrieved passages don’t match the question well (based on keyword overlap or length), a fallback message asks the user to rephrase.
 
 
 ## 👩‍💻 Developer Setup (Local without Docker)
