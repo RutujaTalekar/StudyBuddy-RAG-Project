@@ -24,8 +24,8 @@ def load_documents(json_path):
 # 2. Split text into chunks
 def chunk_documents(documents):
     splitter = RecursiveCharacterTextSplitter(
-        chunk_size=300,     
-        chunk_overlap=30
+        chunk_size=500,     
+        chunk_overlap=50
     )
     return splitter.split_documents(documents)
 
